@@ -1,18 +1,25 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import JobCard from "../../components/JobCard/JobCard";
-
 
 function CategoryPage() {
   const { status } = useParams();
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`/api/jobs?status=${status}`)
-      .then((response) => setJobs(response.data))
-      .catch((err) => console.error(err));
+    const fetchJobsByStatus = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/jobs?status=${status}`
+        );
+        setJobs(response.data);
+      } catch (err) {
+        console.error("Error fetching jobs by status:", err);
+      }
+    };
+
+    fetchJobsByStatus();
   }, [status]);
 
   return (

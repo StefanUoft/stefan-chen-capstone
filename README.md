@@ -62,35 +62,18 @@ Detailed View: View and update details of each application
 Provide visuals of your app's screens. You can use pictures of hand-drawn sketches, or wireframing tools like Figma.
 
 ### Data
-
-Users Table
-
-Field	Type	Description
-id	Integer	Unique user ID
-email	String	User's email address
-password	String	Hashed password
-created_at	DateTime	When the account was created
-
 Jobs Table
 
 Field	Type	Description
 id	Integer	Unique job application ID
-user_id	Integer	Foreign key linking to the User
-company_name	String	Name of the company
-job_title	String	Job title
+companyName	String	Name of the company
+jobTitle	String	Job title
 status	Enum	Status of the job (e.g., To Be Applied, Applied, etc.)
 deadline	Date	Deadline for applying (if applicable)
 notes	Text	Any additional information for this job
 created_at	DateTime	When the job was added
 
-Tables/Collections:
-
-Users: Contains user account information.
-Jobs: Tracks job applications for each user.
-
-Relationships:
-Each User can have multiple Jobs (one-to-many relationship).
-Each Job belongs to exactly one User.
+Data is stored in a JSON file (jobs.json) on the backend, eliminating the need for a database or authentication.
 
 ### Endpoints
 
@@ -100,61 +83,60 @@ Fetch all job applications by status.
 
 Parameters:
 
-status: Status filter (e.g., "To Be Applied")
+status: Status filter (e.g., "To Be Applied").
 Response:
 
-[  
-  {  
-    "id": 1,  
-    "companyName": "TechCorp",  
-    "jobTitle": "Software Engineer",  
-    "status": "Applied",  
-    "deadline": "2024-12-01",  
-    "notes": "Followed up with HR"  
-  },  
-  ...  
-]  
+[
+  {
+    "id": 1,
+    "companyName": "TechCorp",
+    "jobTitle": "Software Engineer",
+    "status": "Applied",
+    "deadline": "2024-12-01",
+    "notes": "Followed up with HR"
+  }
+]
 POST /jobs
 
 Add a new job application.
 
 Request:
 
-{  
-  "companyName": "TechCorp",  
-  "jobTitle": "Software Engineer",  
-  "status": "To Be Applied",  
-  "deadline": "2024-12-01",  
-  "notes": "Update resume for this application"  
-}  
+{
+  "companyName": "TechCorp",
+  "jobTitle": "Software Engineer",
+  "status": "To Be Applied",
+  "deadline": "2024-12-01",
+  "notes": "Update resume for this application"
+}
 Response:
 
-{  
-  "message": "Job added successfully"  
-}  
-PUT /jobs/
+{
+  "message": "Job added successfully"
+}
+PUT /jobs/:id
 
 Update job application details.
 
 Request:
 
-{  
-  "status": "Applied"  
-}  
+{
+  "status": "Applied"
+}
 Response:
 
-{  
-  "message": "Job updated successfully"  
-}  
-DELETE /jobs/
+{
+  "message": "Job updated successfully"
+}
+DELETE /jobs/:id
 
 Delete a job application.
 
 Response:
 
-{  
-  "message": "Job deleted successfully"  
-}  
+{
+  "message": "Job deleted successfully"
+}
 
 ## Roadmap
 

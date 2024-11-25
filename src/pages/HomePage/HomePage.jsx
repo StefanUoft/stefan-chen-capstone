@@ -11,7 +11,6 @@ function HomePage() {
     rejected: 0,
   });
   const [isLoading, setIsLoading] = useState(true);
-
   const [formData, setFormData] = useState({
     companyName: "",
     jobTitle: "",
@@ -26,10 +25,11 @@ function HomePage() {
         const message = await fetchDailyFortune();
         setMotivation(message);
 
-        const response = await axios.get("/api/jobs/count");
+        
+        const response = await axios.get("http://localhost:4000/api/jobs/count");
         setCounts(response.data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching data:", err);
         setMotivation("Unable to load your fortune.");
         setCounts({
           toBeApplied: 0,
@@ -54,7 +54,7 @@ function HomePage() {
     event.preventDefault();
 
     try {
-      await axios.post("/api/jobs", formData);
+      await axios.post("http://localhost:4000/api/jobs", formData);
       alert("Job added successfully!");
       setFormData({
         companyName: "",
@@ -64,10 +64,11 @@ function HomePage() {
         notes: "",
       });
 
-      const response = await axios.get("/api/jobs/count");
+      // Refresh job counts after adding a new job
+      const response = await axios.get("http://localhost:4000/api/jobs/count");
       setCounts(response.data);
     } catch (err) {
-      console.error(err);
+      console.error("Error adding job:", err);
       alert("Failed to add job. Please try again.");
     }
   };

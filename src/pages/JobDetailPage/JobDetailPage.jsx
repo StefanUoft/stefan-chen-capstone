@@ -6,19 +6,31 @@ function JobDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`/api/jobs/${id}`)
-      .then((response) => setJob(response.data))
-      .catch((err) => console.error(err));
+    const fetchJobDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/api/jobs/${id}`);
+        setJob(response.data);
+        setSelectedStatus(response.data.status); // Set initial status in dropdown
+      } catch (err) {
+        console.error("Error fetching job details:", err);
+      }
+    };
+
+    fetchJobDetails();
   }, [id]);
 
-  const handleStatusChange = (newStatus) => {
-    axios
-      .put(`/api/jobs/${id}`, { status: newStatus })
-      .then(() => navigate(`/category/${newStatus}`))
-      .catch((err) => console.error(err));
+  const handleSubmit = async () => {
+    try {
+      await axios.put(`http://localhost:4000/api/jobs/${id}`, { status: selectedStatus });
+      alert("Status updated successfully!");
+      navigate(`/category/${selectedStatus}`);
+    } catch (err) {
+      console.error("Error updating job status:", err);
+      alert("Failed to update status. Please try again.");
+    }
   };
 
   return (
@@ -29,12 +41,21 @@ function JobDetailPage() {
         <p>Status: {job.status}</p>
         <p>Deadline: {job.deadline}</p>
         <p>Notes: {job.notes}</p>
-        <select value={job.status} onChange={(e) => handleStatusChange(e.target.value)}>
-          <option>To Be Applied</option>
-          <option>Applied</option>
-          <option>Interview Received</option>
-          <option>Rejected</option>
-        </select>
+
+        <div>
+          <label htmlFor="status">Change Status:</label>
+          <select
+            id="status"
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
+          >
+            <option value="To Be Applied">To Be Applied</option>
+            <option value="Applied">Applied</option>
+            <option value="Interview Received">Interview Received</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+          <button onClick={handleSubmit}>Submit Changes</button>
+        </div>
       </div>
     )
   );
