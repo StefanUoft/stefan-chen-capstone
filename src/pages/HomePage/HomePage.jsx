@@ -19,13 +19,23 @@ function HomePage() {
     notes: "",
   });
 
+  const [checklist, setChecklist] = useState([]);
+  const defaultChecklist = [
+    { id: 1, text: "Check new job postings on Indeed", completed: false },
+    { id: 2, text: "Check new job postings on LinkedIn", completed: false },
+    { id: 3, text: "Check new job postings on Glassdoor", completed: false },
+    { id: 4, text: "Tailor your resume for a job application", completed: false },
+    { id: 5, text: "Write a custom cover letter for a job", completed: false },
+    { id: 6, text: "Engage with a post or connection on LinkedIn", completed: false },
+    { id: 7, text: "Apply to at least one job today", completed: false }
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const message = await fetchDailyFortune();
         setMotivation(message);
 
-        
         const response = await axios.get("http://localhost:4000/api/jobs/count");
         setCounts(response.data);
       } catch (err) {
@@ -42,7 +52,24 @@ function HomePage() {
       }
     };
 
+   
+    const initializeChecklist = () => {
+      const today = new Date().toISOString().split("T")[0];
+      const savedChecklist = JSON.parse(localStorage.getItem("dailyChecklist"));
+      const savedDate = localStorage.getItem("checklistDate");
+
+      if (savedDate !== today || !savedChecklist) {
+        
+        localStorage.setItem("checklistDate", today);
+        localStorage.setItem("dailyChecklist", JSON.stringify(defaultChecklist));
+        setChecklist(defaultChecklist);
+      } else {
+        setChecklist(savedChecklist);
+      }
+    };
+
     fetchData();
+    initializeChecklist();
   }, []);
 
   const handleInputChange = (event) => {
@@ -64,13 +91,20 @@ function HomePage() {
         notes: "",
       });
 
-      // Refresh job counts after adding a new job
       const response = await axios.get("http://localhost:4000/api/jobs/count");
       setCounts(response.data);
     } catch (err) {
       console.error("Error adding job:", err);
       alert("Failed to add job. Please try again.");
     }
+  };
+
+  const toggleChecklistItem = (id) => {
+    const updatedChecklist = checklist.map((item) =>
+      item.id === id ? { ...item, completed: !item.completed } : item
+    );
+    setChecklist(updatedChecklist);
+    localStorage.setItem("dailyChecklist", JSON.stringify(updatedChecklist));
   };
 
   return (
@@ -153,6 +187,22 @@ function HomePage() {
             </div>
             <button type="submit">Add Job</button>
           </form>
+
+          <h2>Daily Checklist</h2>
+          <ul>
+            {checklist.map((item) => (
+              <li key={item.id}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={item.completed}
+                    onChange={() => toggleChecklistItem(item.id)}
+                  />
+                  {item.text}
+                </label>
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </div>
