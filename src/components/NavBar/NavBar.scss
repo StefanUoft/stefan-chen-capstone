@@ -1,14 +1,25 @@
-.nav{
+.nav {
     padding: 1rem;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
-    
     background-color: rgb(23, 7, 7);
     border-radius: .3125rem;
-
-    &__link{
-        text-decoration: none;
-        color: white;
+  
+    &__link {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7); 
+      transition: color 0.3s ease; 
+  
+      &--active {
+        color: white; 
+        text-decoration: underline;
+        text-underline-offset: .5rem; 
+      }
+  
+      &:hover {
+        color: white; 
+      }
     }
-}
+  }
+  

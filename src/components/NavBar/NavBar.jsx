@@ -1,14 +1,39 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./NavBar.scss";
 
 function NavBar() {
   return (
     <nav className="nav">
-      <Link to="/" className="nav__link">Home</Link>
-      <Link to="/category/To Be Applied" className="nav__link">To Be Applied</Link>
-      <Link to="/category/Applied" className="nav__link">Applied</Link>
-      <Link to="/category/Interview Received" className="nav__link">Interview Received</Link>
-      <Link to="/category/Rejected" className="nav__link">Rejected</Link>
+      <NavLink 
+        to="/" 
+        className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"}
+      >
+        Home
+      </NavLink>
+      <NavLink 
+        to="/category/To Be Applied" 
+        className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"}
+      >
+        To Be Applied
+      </NavLink>
+      <NavLink 
+        to="/category/Applied" 
+        className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"}
+      >
+        Applied
+      </NavLink>
+      <NavLink 
+        to="/category/Interview Received" 
+        className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"}
+      >
+        Interview Received
+      </NavLink>
+      <NavLink 
+        to="/category/Rejected" 
+        className={({ isActive }) => isActive ? "nav__link nav__link--active" : "nav__link"}
+      >
+        Rejected
+      </NavLink>
     </nav>
   );
 }

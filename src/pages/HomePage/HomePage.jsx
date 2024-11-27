@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import fetchDailyFortune from "../../api/fortuneApi";
+import "./HomePage.scss"
 
 function HomePage() {
   const [motivation, setMotivation] = useState("");
