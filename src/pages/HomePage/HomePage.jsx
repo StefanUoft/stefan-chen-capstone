@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import fetchDailyFortune from "../../api/fortuneApi";
-import "./HomePage.scss"
+import "./HomePage.scss";
 
 function HomePage() {
   const [motivation, setMotivation] = useState("");
@@ -25,10 +25,18 @@ function HomePage() {
     { id: 1, text: "Check new job postings on Indeed", completed: false },
     { id: 2, text: "Check new job postings on LinkedIn", completed: false },
     { id: 3, text: "Check new job postings on Glassdoor", completed: false },
-    { id: 4, text: "Tailor your resume for a job application", completed: false },
+    {
+      id: 4,
+      text: "Tailor your resume for a job application",
+      completed: false,
+    },
     { id: 5, text: "Write a custom cover letter for a job", completed: false },
-    { id: 6, text: "Engage with a post or connection on LinkedIn", completed: false },
-    { id: 7, text: "Apply to at least one job today", completed: false }
+    {
+      id: 6,
+      text: "Engage with a post or connection on LinkedIn",
+      completed: false,
+    },
+    { id: 7, text: "Apply to at least one job today", completed: false },
   ];
 
   useEffect(() => {
@@ -37,7 +45,9 @@ function HomePage() {
         const message = await fetchDailyFortune();
         setMotivation(message);
 
-        const response = await axios.get("http://localhost:4000/api/jobs/count");
+        const response = await axios.get(
+          "http://localhost:4000/api/jobs/count"
+        );
         setCounts(response.data);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -53,16 +63,17 @@ function HomePage() {
       }
     };
 
-   
     const initializeChecklist = () => {
       const today = new Date().toISOString().split("T")[0];
       const savedChecklist = JSON.parse(localStorage.getItem("dailyChecklist"));
       const savedDate = localStorage.getItem("checklistDate");
 
       if (savedDate !== today || !savedChecklist) {
-        
         localStorage.setItem("checklistDate", today);
-        localStorage.setItem("dailyChecklist", JSON.stringify(defaultChecklist));
+        localStorage.setItem(
+          "dailyChecklist",
+          JSON.stringify(defaultChecklist)
+        );
         setChecklist(defaultChecklist);
       } else {
         setChecklist(savedChecklist);
@@ -110,25 +121,30 @@ function HomePage() {
 
   return (
     <div>
-      <h1>Job Application Tracker</h1>
+      <h1 className="web__title">Job Application Tracker</h1>
       {isLoading ? (
         <p>Loading your dashboard...</p>
       ) : (
         <>
-          <p>{motivation}</p>
-          <ul>
-            <li>To Be Applied: {counts.toBeApplied || 0}</li>
-            <li>Applied: {counts.applied || 0}</li>
-            <li>Interview Received: {counts.interviewReceived || 0}</li>
-            <li>Rejected: {counts.rejected || 0}</li>
+          <p className="web__message">"{motivation}"</p>
+          <ul className="web__categories">
+            <li className="web__category">
+              To Be Applied: {counts.toBeApplied || 0}
+            </li>
+            <li className="web__category">Applied: {counts.applied || 0}</li>
+            <li className="web__category">
+              Interview Received: {counts.interviewReceived || 0}
+            </li>
+            <li className="web__category">Rejected: {counts.rejected || 0}</li>
           </ul>
 
-          <h2>Add a New Job</h2>
-          <form onSubmit={handleFormSubmit}>
+          <h2 className="form__title">Add a New Job</h2>
+          <form onSubmit={handleFormSubmit} className="form__container">
             <div>
-              <label>
+              <label className="form__titles">
                 Company Name:
                 <input
+                  className="form__input"
                   type="text"
                   name="companyName"
                   value={formData.companyName}
@@ -138,9 +154,10 @@ function HomePage() {
               </label>
             </div>
             <div>
-              <label>
+              <label className="form__titles">
                 Job Title:
                 <input
+                  className="form__input"
                   type="text"
                   name="jobTitle"
                   value={formData.jobTitle}
@@ -150,9 +167,10 @@ function HomePage() {
               </label>
             </div>
             <div>
-              <label>
+              <label className="form__titles">
                 Status:
                 <select
+                  className="form__input"
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
@@ -166,9 +184,10 @@ function HomePage() {
               </label>
             </div>
             <div>
-              <label>
+              <label className="form__titles">
                 Deadline:
                 <input
+                  className="form__input"
                   type="date"
                   name="deadline"
                   value={formData.deadline}
@@ -177,23 +196,28 @@ function HomePage() {
               </label>
             </div>
             <div>
-              <label>
+              <label className="form__titles">
                 Notes:
                 <textarea
+                  className="form__input"
                   name="notes"
                   value={formData.notes}
                   onChange={handleInputChange}
                 ></textarea>
               </label>
             </div>
-            <button type="submit">Add Job</button>
+            <div>
+              <button className="form__button" type="submit">
+                Add Job
+              </button>
+            </div>
           </form>
 
-          <h2>Daily Checklist</h2>
-          <ul>
+          <h2 className="checklist__title">Daily Checklist</h2>
+          <ul className="checklist__lists">
             {checklist.map((item) => (
               <li key={item.id}>
-                <label>
+                <label className="checklist__list">
                   <input
                     type="checkbox"
                     checked={item.completed}
