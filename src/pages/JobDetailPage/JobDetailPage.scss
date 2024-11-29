@@ -8,7 +8,7 @@
     font-size: 1.25rem;
     display: flex;
     justify-content: center;
-    padding: 2rem 0 0.5rem 0;
+    padding: 1rem 0 0.5rem 0;
     @include tablet {
       font-size: 1.5rem;
     }
@@ -34,6 +34,18 @@
     @include tablet {
       font-size: 1.25rem;
     }
+  }
+
+  &__back-button{
+    text-decoration: none;
+    padding: 0.5rem;
+    background-color: rgb(38, 117, 115);
+    color: white;
+    border-radius: 0.5rem;
+    width: 8rem;
+    border: none;
+    height: 2.3rem;
+    margin: 1rem 0 0 3rem;
   }
 }
 

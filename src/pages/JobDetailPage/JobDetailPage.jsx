@@ -14,7 +14,7 @@ function JobDetailPage() {
       try {
         const response = await axios.get(`http://localhost:4000/api/jobs/${id}`);
         setJob(response.data);
-        setSelectedStatus(response.data.status); // Set initial status in dropdown
+        setSelectedStatus(response.data.status); 
       } catch (err) {
         console.error("Error fetching job details:", err);
       }
@@ -37,6 +37,9 @@ function JobDetailPage() {
   return (
     job && (
       <div className="jobs__container">
+        <button onClick={() => navigate(-1)} className="jobs__back-button">
+          Go Back
+        </button>
         <h2 className="jobs__title">{job.jobTitle}</h2>
         <p className="jobs__company">Company: {job.companyName}</p>
         <p className="jobs__status">Status: {job.status}</p>
@@ -58,6 +61,7 @@ function JobDetailPage() {
           </select>
           <button onClick={handleSubmit} className="status__button">Submit Changes</button>
         </div>
+        
       </div>
     )
   );
