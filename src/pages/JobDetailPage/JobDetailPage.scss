@@ -1,0 +1,79 @@
+@use "../../styles/fonts" as *;
+@use "../../styles/variables" as *;
+@use "../../styles/global" as *;
+@use "../../styles/mixins" as *;
+
+.jobs {
+  &__title {
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0 0.5rem 0;
+    @include tablet {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__company {
+    font-size: 1.125rem;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+    @include tablet {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__status,
+  &__deadline,
+  &__notes {
+    font-size: 1.125rem;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+    @include tablet {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.status {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    @include tablet{
+        flex-direction: row;
+        justify-content: center;
+        gap:1rem;
+        padding: 0.5rem;
+    }
+  }
+
+  &__label {
+    font-size: 1.125rem;
+    @include tablet {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__selection {
+    text-decoration: none;
+    padding: 0.5rem;    
+    border-radius: 0.5rem;
+    width: 8rem;
+}
+
+
+  &__button {
+    text-decoration: none;
+    padding: 0.5rem;
+    background-color: rgb(17, 17, 17);
+    color: white;
+    border-radius: 0.5rem;
+    width: 8rem;
+    border: none;
+    height: 2.3rem;
+  }
+}

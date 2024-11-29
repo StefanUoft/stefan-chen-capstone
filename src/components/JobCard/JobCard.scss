@@ -1,0 +1,47 @@
+@use "../../styles/fonts" as *;
+@use "../../styles/variables" as *;
+@use "../../styles/global" as *;
+@use "../../styles/mixins" as *;
+
+.job {
+  &__container {
+    @include tablet {
+      border: 2px dotted #cccccc;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: center;
+    @include tablet {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__company {
+    font-size: 1.125rem;
+    display: flex;
+    justify-content: center;
+    @include tablet {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    padding: 0.5rem;
+    background-color: rgb(17, 17, 17);
+    color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    width: 8rem;
+    justify-content: center;
+    margin: 1rem auto 2rem auto;
+    @include tablet {
+      margin: 1rem auto 1rem auto;
+    }
+  }
+}

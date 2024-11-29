@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "./JobDetailPage.scss"
 
 function JobDetailPage() {
   const { id } = useParams();
@@ -35,16 +36,17 @@ function JobDetailPage() {
 
   return (
     job && (
-      <div>
-        <h1>{job.jobTitle}</h1>
-        <p>Company: {job.companyName}</p>
-        <p>Status: {job.status}</p>
-        <p>Deadline: {job.deadline}</p>
-        <p>Notes: {job.notes}</p>
+      <div className="jobs__container">
+        <h2 className="jobs__title">{job.jobTitle}</h2>
+        <p className="jobs__company">Company: {job.companyName}</p>
+        <p className="jobs__status">Status: {job.status}</p>
+        <p className="jobs__deadline">Deadline: {job.deadline}</p>
+        <p className="jobs__notes">Notes: {job.notes}</p>
 
-        <div>
-          <label htmlFor="status">Change Status:</label>
-          <select
+        <div className="status__container">
+          <label htmlFor="status" className="status__label">Change Status:</label>
+          <select 
+          className="status__selection"
             id="status"
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
@@ -54,7 +56,7 @@ function JobDetailPage() {
             <option value="Interview Received">Interview Received</option>
             <option value="Rejected">Rejected</option>
           </select>
-          <button onClick={handleSubmit}>Submit Changes</button>
+          <button onClick={handleSubmit} className="status__button">Submit Changes</button>
         </div>
       </div>
     )
