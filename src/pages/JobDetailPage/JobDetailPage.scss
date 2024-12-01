@@ -45,7 +45,8 @@
     width: 8rem;
     border: none;
     height: 2.3rem;
-    margin: 1rem 0 0 3rem;
+    display: block;
+    margin: 2rem auto;
   }
 }
 
@@ -87,5 +88,9 @@
     width: 8rem;
     border: none;
     height: 2.3rem;
+    margin-top: 1rem;
+    @include tablet{
+      margin-top: 0;
+    }
   }
 }
